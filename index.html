@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Debris Rush</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="gameContainer">
+        <h1 id="gameTitle">SPACE DEBRIS RUSH</h1>
+        <div id="scoreBoard">
+            <div class="stat">
+                <span class="stat-lebel">Debris destroyed</span>
+                <span class="stat-value" id="destroyed">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-lebel">Actual Debris</span>
+                <span class="stat-value" id="active">16</span>
+            </div>
+            <div class="stat">
+                <span class="stat-lebel">Time:</span>
+                <span class="stat-value" id="timer">0s</span>
+            </div>
+        </div>
+
+        <div id="museumInfo">
+            <h3>The Great Acceleration</h3>
+            <p>Every time you destroy a piece of space debris, two more appear. This represents how space debris grows exponentially every year.</p>
+        </div>
+
+        <div id="gameArea">
+            <img id="earth" src="img/Earth.png" class="earth">
+            <div id="debrisContainer"></div>
+            <div id="particlesContainer"></div>
+        </div>
+
+        <div id="info">
+            <p>Click on the space debris to clean Earth's orbit.</p>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
