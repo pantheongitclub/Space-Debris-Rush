@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Debris Rush</title>
+
+
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,8 +31,28 @@
 
         <div id="museumInfo">
             <h3>The Great Acceleration</h3>
-            <p>Every time you destroy a piece of space debris, two more appear. This represents how space debris grows exponentially every year.</p>
+            <p>Space debris consists of inactive satellites, fragmentation remnants, and discarded components that remain orbiting Earth. As collisions and breakups accumulate over time, the population of these objects grows at an accelerating pace, shaping one of the major challenges of the modern space era.</p>
         </div>
+
+        <div id="timeLineControl">
+            <h3>Timeline</h3>
+            <div class="decade-display">
+                <span id="currentDecade">2020s</span>
+                <span id="debrisCount">~50,000 debris</span>
+                <!-- <p id="decadeDescription">...</p> -->
+            </div>
+
+            <input type="range" id="decadeSlider" min="0" max="7" value="7" step="1">
+            <div class="decade-labels">
+                <span>1950s</span>
+                <span>2020s</span>
+            </div>
+
+            <div id="decadeInfo">
+                <p id="decadeDescription">Mega-constellations and collision events drastically increase space debris.</p>  
+            </div>
+        </div>
+
 
         <div id="gameArea">
             <img id="earth" src="img/Earth.png" class="earth">
@@ -41,8 +63,27 @@
         <div id="info">
             <p>Click on the space debris to clean Earth's orbit.</p>
         </div>
-
     </div>
-    <script src="script.js"></script>
+    
+    <!--pop up-->
+    <div class="messageBackground" id="kesslerPopup" style="display: none;">
+        <div class="message">
+            <div class="messagebox" id="messageBox">
+                <div class="text-section">
+                    <h1>IMPRESSIVE WORK, SPACE CADETS!</h1>
+                    <p>
+                        You've done a great job cleaning up in Space Debris! You know, when I studied Earth's orbit, I realized that if too much junk crashes together, it can create even more debris. That chain reaction is what we now call the Kessler Syndrome. It's not all bad news, though. It means we have the power to make a difference! By building smarter satellites and thinking ahead, we can keep space safe and open for future explorers like you. So keep looking up… and keep it clean out there!
+                    </p>
+                    <button id="closePopup" class="close-btn">Continue</button>
+                </div>
+                <div class="KefflerImage">
+                    <img src="img/Kesslerphoto.png" alt="Donald J. Kessler">
+                    <p class="kesslername">Donald J. Kessler (NASA)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
 </body>
 </html>
