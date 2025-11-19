@@ -2,6 +2,40 @@ let debrisArray = [];
 let score = 0;
 let startTime = Date.now();
 let debrisIdCounter = 0;
+// ========== SPLASH SCREEN ==========
+let gameStarted = false;
+
+function startGame() {
+    if (gameStarted) return;
+    
+    gameStarted = true;
+    console.log("🎮 Iniciando juego...");
+    
+    
+    const splash = document.getElementById('splashScreen');
+    if (splash) {
+        splash.classList.add('hidden');
+        
+       
+        setTimeout(() => {
+            splash.remove();
+        }, 800);
+    }
+    
+    
+    init();
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const splash = document.getElementById('splashScreen');
+    if (splash) {
+        
+        splash.addEventListener('click', startGame);
+        splash.addEventListener('touchstart', startGame);
+    }
+});
+
 
 // ############### TIMER ###############
 let timeRemaining = 60;
@@ -387,11 +421,11 @@ if (decadeSlider) {
     decadeSlider.addEventListener('input', onDecadeChange);
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
+//if (document.readyState === 'loading') {
+//    document.addEventListener('DOMContentLoaded', init);
+//} else {
+//    init();
+//}
 
 window.addEventListener('load', () => {
     updateDecadeInfo(currentDecadeIndex);
