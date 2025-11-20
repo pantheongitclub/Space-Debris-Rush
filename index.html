@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <button id="connectArduinoBtn" class="arduino-btn">CONNECT ARDUINO</button>
     <div id="splashScreen" class="splash-screen">
         <div class="splash-content">
             <h1 class="splash-title">SPACE DEBRIS RUSH</h1>
@@ -19,7 +19,8 @@
             
             
             <div class="touch-indicator">
-                <div class="hand-icon">👆</div>
+                
+                <div class="hand-icon"><img src="img/finger.png" alt="finger image"></div>
                 <div class="tap-text">TAP TO START</div>
                 <div class="touch-ripple"></div>
             </div>
@@ -61,7 +62,7 @@
                 <!-- <p id="decadeDescription">...</p> -->
             </div>
 
-            <input type="range" id="decadeSlider" min="0" max="7" value="7" step="1">
+            <input type="range" id="decadeSlider" min="0" max="7" value="0" step="1">
             <div class="decade-labels">
                 <span>1950s</span>
                 <span>2020s</span>
@@ -103,6 +104,10 @@
         </div>
     </div>
     
+
+    <audio id="bgMusic" loop>
+    <source src="assets/Space_mp3 Sound Track.mp3" type="audio/mpeg">
+    </audio>
     <script src="main.js"></script>
 </body>
 </html>

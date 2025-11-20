@@ -9,8 +9,9 @@ function startGame() {
     if (gameStarted) return;
     
     gameStarted = true;
-    console.log("🎮 Iniciando juego...");
+    console.log("loading game");
     
+    startBackgroundMusic();
     
     const splash = document.getElementById('splashScreen');
     if (splash) {
@@ -41,68 +42,69 @@ document.addEventListener('DOMContentLoaded', () => {
 let timeRemaining = 60;
 let timerRunning = true;
 
-
+let serialPort = null;
+let serialWriter = null;
 
 const decadeData = [
     {
         decade: "1950s",
         year: "1957-1959",
-        count: " <100",
-        debrisOnScreen: 20,
+        count: " <100 debris",
+        debrisOnScreen: 5,
         description: "The space age begins with Sputnik 1 (1957). There is almost no space debris."
     },
     {
         decade: "1960s",
         year: "1970",
-        count: "~2,500",
-        debrisOnScreen: 30,
+        count: "~2,500 debris",
+        debrisOnScreen: 20,
         description: "Cold War: more launches rapidly increase satellites and rocket stages in orbit."
     },
     {
         decade: "1970s",
         year: "1980",
-        count: "~5,500",
+        count: "~5,500 debris",
         debrisOnScreen: 40,
         description: "Launches increase and significant fragmentations (explosions) begin."
     },
     {
         decade: "1980s",
         year: "1990",
-        count: "~7,500",
+        count: "~7,500 debris",
         debrisOnScreen: 55,
         description: "Decades of accumulated launches; most objects are debris (dead satellites)."
     },
     {
         decade: "1990s",
         year: "2000",
-        count: "~9,500",
+        count: "~9,500 debris",
         debrisOnScreen: 75,
         description: "The catalog grows; collision risks are recognized, still without mega-constellations."
     },
     {
         decade: "2000s",
         year: "2010",
-        count: "~15,500",
+        count: "~15,500 debris",
         debrisOnScreen: 90,
         description: "Key decade: more fragmentations and commercial satellites. The population nearly doubles."
     },
     {
         decade: "2010s",
         year: "2020",
-        count: "~21,000",
+        count: "~21,000 debris",
         debrisOnScreen: 115,
         description: "Major events: Chinese anti-satellite test (2007) and the Iridium–Cosmos collision (2009)."
     },
     {
         decade: "2020s",
         year: "2024",
-        count: "~50,000",
-        debrisOnScreen: 2,
+        count: "~50,000 debris",
+        debrisOnScreen: 200,
         description: "Mega-constellations and collision events drastically increase space debris."
     }
 ];
 
-let currentDecadeIndex = 7;
+let currentDecadeIndex = 0;
 let timelineMode = false
 
 
@@ -116,6 +118,21 @@ const earthCenterX = gameWidth / 2;
 const earthCenterY = gameHeight / 2;
 
 const debrisImages = ['img/space-debris-1.png', 'img/space-debris-2.png', 'img/space-debris-3.png'];
+
+//connects to Arduino via Web Serial API
+async function connectToArduino() {
+    serialPort = await navigator.serial.requestPort();
+    await serialPort.open({ baudRate: 9600 });
+    serialWriter = serialPort.writable.getWriter();
+}
+
+//sebds "H" to Arduino on hit
+async function sendHitToArduino() {
+    if (!serialWriter) return;
+    serialWriter.write(new TextEncoder().encode("H"));
+}
+
+
 
 class Debris {
     constructor(angle = null) {
@@ -170,7 +187,7 @@ class Debris {
     }
 
     onClick() { 
-
+        playExplosionSound();
         console.log("Debris clicked:", this.id);
         //ledExplosion();
         this.createExplosion();
@@ -178,6 +195,8 @@ class Debris {
         score++;
         addDebris(0);
         updateStats();
+        //Sends signal to Arduino on hit
+        sendHitToArduino();
 
         setTimeout(() => {
             if (debrisArray.length === 0) {
@@ -468,10 +487,34 @@ function hideKesslerPopup() {
     console.log("Restart game 1950");
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closePopup');
     if (closeBtn) {
         closeBtn.addEventListener('click', hideKesslerPopup);
     }
 });
+
+// Arduino Connection and Communication
+document.getElementById('connectArduinoBtn').addEventListener('click', () => {
+    connectToArduino();
+});
+
+
+
+// ========= BACKGROUND MUSIC =========
+const bgMusic = document.getElementById('bgMusic');
+
+function startBackgroundMusic() {
+    if (!bgMusic) return;
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(err => {
+        console.log('Autoplay bloqueado, la música se iniciará al siguiente click.', err);
+    });
+}
+
+// ========= EXPLOSION SOUND =========
+function playExplosionSound() {
+    const explosion = new Audio('assets/Explosion.mp3');
+    explosion.volume = 0.5;
+    explosion.play();
+}

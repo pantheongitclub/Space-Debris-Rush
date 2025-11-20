@@ -586,10 +586,16 @@ body {
 }
 
 .hand-icon {
-    font-size: 4em;
+    font-size: 0.4em;
     animation: tap 1.5s ease-in-out infinite;
     position: relative;
     z-index: 2;
+}
+
+.hand-icon img {
+    height: 200px;
+    width: auto;
+    padding-top: 50px;
 }
 
 @keyframes tap {
@@ -702,4 +708,44 @@ body {
     .tap-text {
         font-size: 1.2em;
     }
+}
+
+/* ========== ARDUINO BUTTON ========== */
+.arduino-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 22px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(140, 90, 255, 0.7);
+  border-radius: 6px;
+
+  box-shadow: 0 0 10px rgba(140, 90, 255, 0.7), 
+              0 0 20px rgba(140, 90, 255, 0.3);
+
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  z-index: 9999;
+
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.arduino-btn:hover {
+  background: rgba(140, 90, 255, 0.15);
+  box-shadow: 0 0 15px rgba(140, 90, 255, 1),
+              0 0 30px rgba(140, 90, 255, 0.6);
+  transform: scale(1.08);
+}
+
+.arduino-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(140, 90, 255, 1);
 }
